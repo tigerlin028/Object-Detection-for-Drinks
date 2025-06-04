@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.tfrecord
+checkpoint/
+*.ckpt*
+saved_model/
+exported-model/
+train/
+eval/
+logs/
+
+.ipynb_checkpoints/
+.vscode/
