@@ -1,43 +1,108 @@
-# Object Detection for Drinks
+# 🥤 Object Detection for Drinks
 
-This repository contains the training pipeline, scripts, and configuration files used to train a custom object detection model for drink volume classification using TensorFlow 2.
+This project demonstrates a full TensorFlow 2.x pipeline for training and deploying a custom object detection model to detect drink fill levels using the SSD MobileNet V2 architecture.
 
-## Model Architecture
+---
 
-- **Base model**: `ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8`
-- **Input size**: 640×640
-- **Framework**: TensorFlow 2.x Object Detection API
+## 🚀 Workflow Overview
 
-## Project Structure
+### 1. Environment Setup
+- Create a Conda environment (e.g. `tfod_py39`) with TensorFlow 2.10.1.
+- Install dependencies for the [TensorFlow Object Detection API](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md).
+- Download the base model:
+  ```
+  ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8
+  ```
+
+---
+
+### 2. Data Preparation
+- Use `CVAT` to:
+  - Annotate bounding boxes on each frame of your MP4 video.
+  - Export the dataset in **Pascal VOC** format.
+- Extract frames from the video using CVAT or ffmpeg, save them as `.png`.
+- Organize the directory like this:
+  ```
+  JPEGImages/
+  Annotations/
+  ImageSets/
+  ```
+
+---
+
+### 3. TFRecord Generation
+- Use the provided script:
+  ```bash
+  python scripts/generate_tfrecord_png.py
+  ```
+- This will create `train.record` and `test.record` files from VOC annotations.
+
+---
+
+### 4. Model Training
+- Modify `configs/pipeline.config` to:
+  - Set your `num_classes`
+  - Point to the correct `label_map_path` and TFRecord paths
+  - Use the correct fine-tune checkpoint
+
+- Start training:
+  ```bash
+  python core/model_main_tf2.py \
+    --model_dir=data/models/custom_drink_dataModel \
+    --pipeline_config_path=configs/pipeline.config \
+    --alsologtostderr
+  ```
+
+---
+
+### 5. Export Trained Model
+- Use the following script to export your model:
+  ```bash
+  python core/exporter_main_v2.py \
+    --input_type image_tensor \
+    --pipeline_config_path=configs/pipeline.config \
+    --trained_checkpoint_dir=custom_drink_dataModel \
+    --output_directory=CExportModel
+  ```
+
+---
+
+### 6. Run Inference on Images or Videos
+- Predict bounding boxes on a single image:
+  ```bash
+  python scripts/predict.py
+  ```
+
+- Or overlay predictions on an entire video:
+  ```bash
+  python scripts/predict_video.py
+  ```
+
+---
+
+## 📂 Project Structure
 
 ```
-├── core/          # Training logic
-├── configs/       # Model config
-├── data/          # TFRecords, label maps
-├── scripts/       # Inference & utils
-```
-
-## Usage
-
-### Train
-
-```bash
-python core/model_main_tf2.py --model_dir=... --pipeline_config_path=... --alsologtostderr
-```
-
-### Export
-
-```bash
-python scripts/exporter_main_v2.py --input_type image_tensor --pipeline_config_path=... --trained_checkpoint_dir=... --output_directory=...
-```
-
-### Predict
-
-```bash
-python scripts/predict.py
-python scripts/predict_video.py
+├── core/                  # Training scripts (model_main, model_lib, exporter)
+├── configs/               # Model pipeline configuration
+├── data/                  # TFRecords and label map
+├── scripts/               # Inference and conversion utilities
+├── .gitignore
+├── README.md
 ```
 
 ---
 
-Built by tigerlin028
+## 🧠 Key Tools & Concepts
+
+- **TensorFlow 2 Object Detection API**
+- **SSD MobileNet V2 FPN 640x640**
+- **CVAT for annotation**
+- **TFRecord for input pipelines**
+- **Real-time bounding box rendering using OpenCV**
+
+---
+
+## ✍️ Author
+
+Developed by [@tigerlin028](https://github.com/tigerlin028)
