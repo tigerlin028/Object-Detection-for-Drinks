@@ -3,29 +3,24 @@ import numpy as np
 import cv2
 import os
 
-# 模型路径（改成你自己的）
-MODEL_DIR = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/CExportModel/saved_model"
-VIDEO_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/Peach_paradise_Lychee_chia_etc.mp4"
-OUTPUT_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/Peach_paradise_Lychee_chia_etc_R.mp4"
+MODEL_DIR = ""
+VIDEO_PATH = ""
+OUTPUT_PATH = ""
 
-# 类别标签字典（修改成你自己的）
 CATEGORY_INDEX = {
     1: {'id': 1, 'name': 'full'},
     2: {'id': 2, 'name': 'notfull'}
 }
 
-# 加载模型
 print("Loading model...")
 detect_fn = tf.saved_model.load(MODEL_DIR)
 print("Model loaded.")
 
-# 视频读取初始化
 cap = cv2.VideoCapture(VIDEO_PATH)
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 fps = cap.get(cv2.CAP_PROP_FPS)
 
-# 输出视频编码器设置
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter(OUTPUT_PATH, fourcc, fps, (width, height))
 
