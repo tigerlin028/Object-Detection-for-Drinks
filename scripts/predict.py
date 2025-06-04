@@ -6,6 +6,7 @@ import os
 MODEL_DIR = ""
 IMAGE_PATH = ""
 OUTPUT_PATH = ""
+
 CATEGORY_INDEX = {
     1: {'id': 1, 'name': 'full'},
     2: {'id': 2, 'name': 'notfull'}
