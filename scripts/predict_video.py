@@ -3,12 +3,12 @@ import numpy as np
 import cv2
 import os
 
-# 模型路径（修改成你自己的路径）
+# Model path
 MODEL_DIR = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/F_ExportModel/saved_model"
-VIDEO_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/Jasmine_milk_tea_2nd_pour.mp4"
-OUTPUT_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/Jasmine_milk_tea_2nd_pour_RR.mp4"
+VIDEO_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/Brown_sugar_milk.mp4"
+OUTPUT_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/Brown_sugar_milk_RR.mp4"
 
-# 类别标签字典
+# Class label dictionary
 CATEGORY_INDEX = {
     1: {'id': 1, 'name': 'full'},
     2: {'id': 2, 'name': 'not_full'},
@@ -42,7 +42,7 @@ while cap.isOpened():
     scores = detections['detection_scores'][0].numpy()
     classes = detections['detection_classes'][0].numpy().astype(np.int32)
 
-    # 只取 top-1 且分数大于阈值的预测
+    # Only draw top-1 prediction if the confidence score exceeds the threshold
     if scores[0] > CONF_THRESH:
         y1, x1, y2, x2 = boxes[0]
         (left, top, right, bottom) = (x1 * width, y1 * height, x2 * width, y2 * height)
