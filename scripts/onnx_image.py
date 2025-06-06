@@ -4,7 +4,7 @@ import cv2
 
 # Load ONNX model
 session = ort.InferenceSession(
-    "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/F_ExportModel/model.onnx"
+    "./model.onnx"
 )
 
 # Print input and output names
@@ -12,7 +12,7 @@ print("Inputs:", [i.name for i in session.get_inputs()])
 print("Outputs:", [o.name for o in session.get_outputs()])
 
 # Load test image
-image = cv2.imread("cb3.png")  # Replace with any test image
+image = cv2.imread("")  # Replace with any test image
 input_tensor = cv2.resize(image, (640, 640))  # Resize to match model input size
 input_tensor = input_tensor.astype(np.uint8)
 input_tensor = np.expand_dims(input_tensor, axis=0)

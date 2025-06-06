@@ -4,7 +4,7 @@ import cv2
 
 # Load ONNX model
 session = ort.InferenceSession(
-    "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/F_ExportModel/model.onnx"
+    "./model.onnx"
 )
 
 # Class label map
@@ -45,12 +45,12 @@ def nms(boxes, scores, iou_threshold=0.5):
     return indices
 
 # Load input video
-video_path = "Brown_sugar_milk.mp4"
+video_path = ""  # Replace with your input video path
 cap = cv2.VideoCapture(video_path)
 
 # Save output video
 save_output = True
-output_path = "Brown_sugar_milk_R.mp4"
+output_path = ""
 fourcc = cv2.VideoWriter_fourcc(*"mp4v")
 fps = cap.get(cv2.CAP_PROP_FPS)
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))

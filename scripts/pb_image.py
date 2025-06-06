@@ -4,9 +4,9 @@ import cv2
 import os
 
 # Path to the saved model 
-MODEL_DIR = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/CExportModel/saved_model"
-IMAGE_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/cb2.png"
-OUTPUT_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/cbresult2.png"
+MODEL_DIR = "./saved_model"
+IMAGE_PATH = ""
+OUTPUT_PATH = ""
 # Label dictionary
 CATEGORY_INDEX = {
     1: {'id': 1, 'name': 'full'},

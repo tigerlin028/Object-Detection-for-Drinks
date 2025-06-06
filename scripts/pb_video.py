@@ -4,9 +4,9 @@ import cv2
 import os
 
 # Model path
-MODEL_DIR = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/F_ExportModel/saved_model"
-VIDEO_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/Brown_sugar_milk.mp4"
-OUTPUT_PATH = "C:/Users/Josh Huang/Documents/TensorFlow/models/research/data/models/Brown_sugar_milk_RR.mp4"
+MODEL_DIR = "./saved_model"
+VIDEO_PATH = ""
+OUTPUT_PATH = ""
 
 # Class label dictionary
 CATEGORY_INDEX = {
