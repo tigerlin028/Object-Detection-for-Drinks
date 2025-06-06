@@ -62,20 +62,57 @@ This project demonstrates a full TensorFlow 2.x pipeline for training and deploy
     --input_type image_tensor \
     --pipeline_config_path=configs/pipeline.config \
     --trained_checkpoint_dir=custom_drink_dataModel \
-    --output_directory=CExportModel
+    --output_directory=F_ExportModel
   ```
 
 ---
 
-### 6. Run Inference on Images or Videos
-- Predict bounding boxes on a single image:
+### 6. Run Inference on Images or Videos (TensorFlow SavedModel)
+
+- Predict bounding boxes on a single image using SavedModel:
   ```bash
-  python scripts/predict.py
+  python scripts/pb_image.py
   ```
 
-- Or overlay predictions on an entire video:
+- Overlay predictions on an entire video using SavedModel:
   ```bash
-  python scripts/predict_video.py
+  python scripts/pb_video.py
+  ```
+
+---
+
+### 7. Convert TensorFlow Model to ONNX
+
+After exporting your model in TensorFlow `saved_model` format, convert it to ONNX with:
+
+```bash
+python -m tf2onnx.convert ^
+  --saved-model "F_ExportModel/saved_model" ^
+  --output "F_ExportModel/model.onnx" ^
+  --opset 13 ^
+  --tag serve ^
+  --signature_def serving_default
+```
+
+Make sure to install the required packages:
+```bash
+pip install tf2onnx onnx
+```
+
+This produces an optimized `model.onnx` file ready for efficient inference using ONNX Runtime.
+
+---
+
+### 8. Run Inference on Images or Videos (ONNX)
+
+- Predict bounding boxes on a **single image** using ONNX:
+  ```bash
+  python scripts/onnx_image.py
+  ```
+
+- Predict bounding boxes on a **video** using ONNX with NMS:
+  ```bash
+  python scripts/onnx_video.py
   ```
 
 ---
@@ -87,6 +124,11 @@ This project demonstrates a full TensorFlow 2.x pipeline for training and deploy
 ├── configs/               # Model pipeline configuration
 ├── data/                  # TFRecords and label map
 ├── scripts/               # Inference and conversion utilities
+│   ├── generate_tfrecord_png.py
+│   ├── pb_image.py
+│   ├── pb_video.py
+│   ├── onnx_image.py
+│   └── onnx_video.py
 ├── .gitignore
 ├── README.md
 ```
@@ -96,6 +138,7 @@ This project demonstrates a full TensorFlow 2.x pipeline for training and deploy
 ## 🧠 Key Tools & Concepts
 
 - **TensorFlow 2 Object Detection API**
+- **ONNX Runtime for deployment**
 - **SSD MobileNet V2 FPN 640x640**
 - **CVAT for annotation**
 - **TFRecord for input pipelines**
@@ -105,4 +148,4 @@ This project demonstrates a full TensorFlow 2.x pipeline for training and deploy
 
 ## ✍️ Author
 
-Developed by [@tigerlin028](https://github.com/tigerlin028)
+Developed by Xiaotian Lin [@tigerlin028](https://github.com/tigerlin028)
