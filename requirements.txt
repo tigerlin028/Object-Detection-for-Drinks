@@ -1,0 +1,12 @@
+tensorflow==2.10.1
+tensorflow_hub
+tensorflow_io
+pillow
+lxml
+Cython
+matplotlib
+pycocotools
+opencv-python
+tf-slim
+scipy
+absl-py
