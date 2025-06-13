@@ -1,4 +1,4 @@
-# 🥤 Object Detection for Drinks
+# 🥤 Object Detection for Drink Fill Level
 
 This project demonstrates a full TensorFlow 2.x pipeline for training and deploying a custom object detection model to detect drink fill levels using the SSD MobileNet V2 architecture.
 
